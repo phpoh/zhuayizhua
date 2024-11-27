@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时图片展示</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* 让页面和body填满整个视口 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000; /* 背景色为黑色 */
+        }
+
+        #imageContainer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 确保图片等比缩放 */
+        }
+
+        .loading {
+            font-size: 1.2em;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>实时更新的图片</h1>
+    <div id="imageContainer">
+        <div class="loading">正在加载图片...</div>
+    </div>
+
+    <script>
+        async function fetchImage() {
+            try {
+                const response = await fetch('http://192.168.1.4:8888/image/recent');
+                if (response.ok) {
+                    const imageBlob = await response.blob();
+                    const imageUrl = URL.createObjectURL(imageBlob);
+                    const imgElement = document.createElement('img');
+                    imgElement.src = imageUrl;
+
+                    // 更新页面中的图片
+                    const container = document.getElementById('imageContainer');
+                    container.innerHTML = ''; // 清空旧图片
+                    container.appendChild(imgElement);
+                } else {
+                    console.error('无法获取图片，HTTP 错误：', response.status);
+                }
+            } catch (error) {
+                console.error('请求失败：', error);
+            }
+        }
+
+        // 每秒请求一次图片
+        setInterval(fetchImage, 1000);
+    </script>
+</body>
+</html>

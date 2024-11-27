@@ -1,6 +1,7 @@
 server:
-  port: 8887
+  port: 8888  # 设置后端服务的端口为 8887
+  address: 0.0.0.0  # 绑定到所有网络接口，允许局域网访问
 
 spring:
   application:
-    name: demo1
+    name: demo1  # 设置应用名称为 demo1
