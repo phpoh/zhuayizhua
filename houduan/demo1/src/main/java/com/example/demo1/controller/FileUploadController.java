@@ -18,7 +18,7 @@ public class FileUploadController {
             return ResponseEntity.badRequest().body("没有文件上传");
         }
 
-        String uploadDir = "F:/Desktop/JavaDemo/demo1/";
+        String uploadDir = "F:/Desktop/JavaDemo/zhuayizhua/houduan/";
         String fileName = imageFile.getOriginalFilename();
         File fileToSave = new File(uploadDir + fileName);
 
